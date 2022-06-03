@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint-fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "@nomiclabs/hardhat-ethers": "2.0.5",
@@ -33,6 +34,6 @@
     "eslint-plugin-react": "^7.30.0",
     "eslint-plugin-react-hooks": "^4.5.0",
     "postcss": "8.4.7",
-    "tailwindcss": "3.0.23"
+    "tailwindcss": "^3.0.23"
   }
 }
