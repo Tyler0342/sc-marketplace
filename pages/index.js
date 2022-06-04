@@ -1,8 +1,12 @@
 import { useSte, useEffect, useRef } from 'react';
 import { Banner, CreatorCard } from '../components';
 
+import images from '../assets';
+import { makeId } from '../utils/makeId';
+
 const Home = () => {
   const parentRef = useRef(null);
+  const scrollRef = useRef(null);
 
   return (
     <div className="flex justify-canter sm:px-4 p-12">
@@ -23,7 +27,12 @@ const Home = () => {
               className="flex flex-row w-max overflow-x-scroll no-scrollbar select-none"
               ref={scrollRef}>
               {[6, 7, 8, 9, 10].map((i) => (
-                <CreatorCard />
+                <CreatorCard
+                  key={`creator-${i}`}
+                  rank={i}
+                  creatorImage={images[`creator${i}`]}
+                  creatorName={`0x${makeId(3)}...${makeId}(4)`}
+                />
               ))}
             </div>
           </div>
