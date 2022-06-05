@@ -31,7 +31,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex-1 flexBetweenStart flex-wrap ml-10 md:ml-0 md:mt-8">
-          <FooterLinks heading="Maggio's Market" items={['Explore', 'How It Works', 'Contact Us']} />
+          <FooterLinks heading="Maggio's Marketplace" items={['Explore', 'How It Works', 'Contact Us']} />
           <FooterLinks heading="Support" items={['Find Help', 'Terms of Service', 'Legal', 'Privacy Policy']} />
         </div>
       </div>

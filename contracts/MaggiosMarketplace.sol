@@ -7,4 +7,38 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 import "hardhat/console.sol";
 
+contract MaggiosMarketplace is ERC721URIStorage {
+    using Counters for Counters.Counter;
 
+    // create token ids
+    Counters.Counter private _tokenIds;
+    Counters.Counter private _itemsSold;
+    // set royalty price
+    uint256 royaltyPrice = 0.025 ether;
+
+    // declare owner of contract - owner gets commission
+    address payable owner;
+
+    mapping(uint256 => MarketItem) private idToMarketItem;
+    // structs are like JS objects
+    struct MarketItem {
+        uint256 tokenId;
+        address payable seller;
+        address payable owner;
+        uint256 price;
+        bool sold;
+    }
+    // event triggered on an action
+    event MarketItemCreated (
+        uint256 indexed tokenId,
+        address payable seller,
+        address payable owner,
+        uint256 price,
+        bool sold
+    );
+
+    constructor() {
+        // owner of contract is the one deploying it
+        owner = payable(msg.sender);
+    }
+}
