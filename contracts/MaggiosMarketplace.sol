@@ -38,7 +38,18 @@ contract MaggiosMarketplace is ERC721URIStorage {
     );
 
     constructor() {
-        // owner of contract is the one deploying it
+    // owner of contract is the one deploying it
         owner = payable(msg.sender);
+    }
+    // payable allows function to recieve ether
+    // updates listing price
+    function updateListingPrice(uint _royaltyPrice) public payable {
+        require(owner == msg.sender, "Only listing owner can update the listing price");
+
+        royaltyPrice = _royaltyPrice;
+    }
+    // view means function only returns something
+    function getListingPrice() public view returns (uint256) {
+        return royaltyPrice;
     }
 }
