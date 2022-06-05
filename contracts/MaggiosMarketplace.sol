@@ -14,7 +14,7 @@ contract MaggiosMarketplace is ERC721URIStorage {
     Counters.Counter private _tokenIds;
     Counters.Counter private _itemsSold;
     // set royalty price
-    uint256 listingPrice = 0.025 ether;
+    uint256 royaltyPrice = 0.025 ether;
 
     // declare owner of contract - owner gets commission
     address payable owner;
@@ -43,14 +43,14 @@ contract MaggiosMarketplace is ERC721URIStorage {
     }
     // payable allows function to recieve ether
     // updates listing price
-    function updateListingPrice(uint _listingPrice) public payable {
+    function updateroyaltyPrice(uint _royaltyPrice) public payable {
         require(owner == msg.sender, "Only listing owner can update the listing price");
 
-        listingPrice = _listingPrice;
+        royaltyPrice = _royaltyPrice;
     }
     // view means function only returns something
-    function getListingPrice() public view returns (uint256) {
-        return listingPrice;
+    function getroyaltyPrice() public view returns (uint256) {
+        return royaltyPrice;
     }
 
     // Upload NFT and get token URI
@@ -68,8 +68,8 @@ contract MaggiosMarketplace is ERC721URIStorage {
     }
     // Private functions are not called from frontend
     function createMarketItem(uint256 tokenId, uint256 price) private {
-        require(price > 0, "Price must be at least 1");
-        require(msg.value == listingPrice, "Price must be equal to the listing price");
+        require(price > 0, "Price must be at least 1 wei");
+        require(msg.value == royaltyPrice, "Price must be equal to the listing price");
         // Create mapping for market items
         idToMarketItem[tokenId] = MarketItem(
             tokenId,
@@ -81,12 +81,18 @@ contract MaggiosMarketplace is ERC721URIStorage {
         // Transfer ownership to contract
         _transfer(msg.sender, address(this), tokenId);
         // Broadcast event to blockchain
-        emit MarketItemCreated(tokenId, msg.sender, address(this), price, false);
+        emit MarketItemCreated(
+        tokenId,
+        msg.sender,
+        address(this),
+        price,
+        false
+      );
     }
-
+    // Relist token
     function resellToken(uint256 tokenId, uint256 price) public payable {
         require(idToMarketItem[tokenId].owner == msg.sender, "Only item owner can perform this operation");
-        require(msg.value == listingPrice, "Price must be equal to the listing price");
+        require(msg.value == royaltyPrice, "Price must be equal to the listing price");
         // Update properties of NFT
         idToMarketItem[tokenId].sold = false;
         idToMarketItem[tokenId].price = price;
@@ -96,5 +102,23 @@ contract MaggiosMarketplace is ERC721URIStorage {
         _itemsSold.decrement();
 
         _transfer(msg.sender, address(this), tokenId);
+    }
+    // Create sale
+    function createMarketSale(uint256 tokenId) public payable {
+        uint price = idToMarketItem[tokenId].price;
+
+        require(msg.value == price, "Please submit the asking price in order to complete the purchase");
+        // Update properties of NFT
+        idToMarketItem[tokenId].owner = payable(msg.sender);
+        idToMarketItem[tokenId].sold = true;
+        idToMarketItem[tokenId].seller = payable(address(0));
+
+        _itemsSold.increment();
+
+        _transfer(address(this), msg.sender, tokenId);
+        // Send royalty to marketplace owner
+        payable(owner).transfer(royaltyPrice);
+        // Send eth to seller
+        payable(idToMarketItem[tokenId].seller).transfer(msg.value);
     }
 }
