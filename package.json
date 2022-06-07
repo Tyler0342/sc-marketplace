@@ -26,6 +26,7 @@
     "@next/eslint-plugin-next": "^12.1.6",
     "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@types/react": "^18.0.12",
     "autoprefixer": "10.4.2",
     "chai": "^4.3.6",
     "eslint": "8.16.0",

@@ -4,6 +4,7 @@ import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { NFTContext } from '../context/NFTContext';
 import images from '../assets';
 import Button from './Button';
 
@@ -41,9 +42,9 @@ const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
 };
 
 const ButtonGroup = ({ setActive, router }) => {
-  const hasConnected = true;
+  const { connectWallet, currentAccount } = useContext(NFTContext);
 
-  return hasConnected ? (
+  return currentAccount ? (
     <div className="flexCenter">
       <Button
         btnName="Create"
@@ -58,9 +59,8 @@ const ButtonGroup = ({ setActive, router }) => {
   ) : (
     <Button
       btnName="Connect"
-      btnType="outline"
-      classStyles="mx-2 rounded-lg"
-      // handleClick={connectWallet}
+      classStyles="mx-2 rounded-xl"
+      handleClick={connectWallet}
     />
   );
 };
