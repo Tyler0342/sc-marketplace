@@ -19,7 +19,7 @@ const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
   };
 
   return (
-    <ul className={`list-none flexCenter flex-row ${isMobile && 'flex-col h-full'}`}>
+    <ul className={`list-none flexCenter ${isMobile ? 'flex-col h-full' : undefined}`}>
       {['Explore NFTs', 'Listed NFTs', 'My NFTs'].map((item, i) => (
         <li
           key={i}
@@ -32,7 +32,7 @@ const MenuItems = ({ isMobile, active, setActive, setIsOpen }) => {
           ${active === item
             ? 'dark:text-white text-nft-black-1'
             : 'dark:text-nft-gray-3 text-nft-gray-2'} 
-          ${isMobile && 'my-5 text-xl'}`}
+          ${isMobile ? 'my-5 text-xl' : undefined}`}
         >
           <Link href={generateLink(i)}>{item}</Link>
         </li>

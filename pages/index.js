@@ -68,11 +68,11 @@ const Home = () => {
             >
               {[6, 7, 8, 9, 10].map((i) => (
                 <CreatorCard
-                  key={`creator.${i}`}
+                  key={`creator-${i}`}
                   rank={i}
                   creatorImage={images[`creator${i}`]}
                   creatorName={`0x${makeId(3)}...${makeId(4)}`}
-                  creatorEther={10 - i * 0.5}
+                  creatorEther={10 - i * 0.534}
                 />
               ))}
               {hideScrollButtons && (
@@ -82,7 +82,7 @@ const Home = () => {
                     src={images.left}
                     objectFit="contain"
                     alt="left_arrow"
-                    className={theme === 'light' && 'filter invert'}
+                    className={theme === 'light' ? 'filter invert' : undefined}
                   />
                 </div>
                 <div onClick={() => handleScroll('right')} className="absolute w-8 h-8 minlg:w-12 minlg:h-12 top-45 cursor-pointer right-0">
@@ -90,7 +90,7 @@ const Home = () => {
                     src={images.right}
                     objectFit="contain"
                     alt="right_arrow"
-                    className={theme === 'light' && 'filter invert'}
+                    className={theme === 'light' ? 'filter invert' : undefined}
                   />
                 </div>
               </>
@@ -109,7 +109,7 @@ const Home = () => {
                   nft={{
                     i,
                     name: `NFT ${i}`,
-                    price: (10 - i * 0.567).toFixed(2),
+                    price: (10 - i * 0.534).toFixed(2),
                     seller: `0x${makeId(3)}...${makeId(4)}`,
                     owner: `0x${makeId(3)}...${makeId(4)}`,
                     description: 'Rare NFT for sale',
