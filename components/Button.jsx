@@ -1,7 +1,9 @@
-const Button = ({ btnName, classStyles, handleClick }) => (
+const Button = ({ btnName, classStyles, btnType, handleClick }) => (
   <button
     type="button"
-    className={`nft-gradient text-sm minlg:text py-2 px-6 minlg:px-8 pt-1 font-poppins font-semibold text-white ${classStyles}`}
+    className={
+        btnType === 'primary' ? `${primaryBtn} ${classStyles}` : `${outlineBtn} ${classStyles}`
+    }
     onClick={handleClick}
   >
     {btnName}

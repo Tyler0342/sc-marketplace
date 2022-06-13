@@ -7,10 +7,11 @@ import images from '../assets';
 import { makeId } from '../utils/makeId';
 
 const Home = () => {
-  const { theme } = useTheme();
   const [hideScrollButtons, setHideScrollButtons] = useState(false);
   const parentRef = useRef(null);
   const scrollRef = useRef(null);
+
+   const { theme } = useTheme();
 
   const handleScroll = (direction) => {
     const { current } = scrollRef;
@@ -75,7 +76,7 @@ const Home = () => {
                   creatorEther={10 - i * 0.534}
                 />
               ))}
-              {hideScrollButtons && (
+              {!!hideScrollButtons && (
               <>
                 <div onClick={() => handleScroll('left')} className="absolute w-8 h-8 minlg:w-12 minlg:h-12 top-45 cursor-pointer left-0">
                   <Image
